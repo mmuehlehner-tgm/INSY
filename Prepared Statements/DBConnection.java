@@ -1,4 +1,9 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
+
 import org.postgresql.ds.PGSimpleDataSource;
 
 /**
@@ -24,12 +29,40 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DBConnection {
 
 	public static void main(String[] args) {
+		
+		Properties prop = new Properties();
+		InputStream input = null;
+		
 		// Datenquelle erzeugen und konfigurieren
 		PGSimpleDataSource ds = new PGSimpleDataSource();
-		ds.setServerName("10.0.106.235");
-		ds.setDatabaseName("schokofabrik");
-		ds.setUser("schokouser");
-		ds.setPassword("schokoUser");
+		
+		try {
+
+			input = new FileInputStream("dbconnection.properties");
+
+			// Properties File laden
+			prop.load(input);
+			
+			// Propertie value eisetzen
+			ds.setServerName(prop.getProperty("server"));
+			ds.setDatabaseName(prop.getProperty("database"));
+			ds.setUser(prop.getProperty("dbuser"));
+			ds.setPassword(prop.getProperty("dbpassword"));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
 		/*
 		 * Original:
 		 * 			import java.sql.*;
@@ -61,10 +94,10 @@ public class DBConnection {
 		try ( 	// Alles in den runden Klammern wird automatisch geschlossen
 				// Ab Java 7
 				// Verbindung herstellen
-		Connection con = ds.getConnection();
+				Connection con = ds.getConnection();
 				// Abfrage vorbereiten und ausführen
 				/*
-				 * Statement createStatement()
+				 	Statement createStatement()
                           throws SQLException
 					Creates a Statement object for sending SQL statements to the database. 
 					SQL statements without parameters are normally executed using Statement objects. 
