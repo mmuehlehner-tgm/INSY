@@ -6,7 +6,7 @@ public class Main {
 		
 		DBConnection dbcon=new DBConnection("dbconnection.properties");
 		Connection c=dbcon.connect();
-		CLI cliargs=new CLI();
+		CLI cliargs=new CLI(args);
 		String[] argsstring=cliargs.returnArgs();
 		System.out.println(argsstring[0]);
 		Statements s=new Statements(c);

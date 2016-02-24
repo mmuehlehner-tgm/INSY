@@ -6,14 +6,14 @@ public class CLI {
 	Options options = new Options();
 	String serverName, databaseName, userName, password;
 	
-	public CLI(){
+	public CLI(String[] args){
 		options.addOption("N", true, "Server Name");
 		options.addOption("D", true, "Database Name");
 		options.addOption("U", true, "Username");
 		options.addOption("P", true, "Password");
 		
-		String[] args = {"N", "D", "U", "P"};
-		CommandLineParser parser = new BasicParser();
+		
+		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(options, args);
 			
