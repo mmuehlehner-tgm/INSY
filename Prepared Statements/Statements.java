@@ -42,7 +42,7 @@ public class Statements
      */
     public void read()
     {
-	String readPostgre = "SELECT * FROM number";
+	String readPostgre = "SELECT * FROM number;";
 	PreparedStatement read;
 	ResultSet rs = null;
 	try
@@ -67,9 +67,9 @@ public class Statements
      */
     public void update()
     {
-	String updatePostgre = "UPDATE number SET nummer = ? WHERE nummer = ?";
+	String updatePostgre = "UPDATE number SET nummer = ? WHERE nummer = ?;";
 	PreparedStatement update;
-	for (int x = 0; x <= 10000; x++)
+	for (int x = 1; x <= 10000; x++)
 	{
 	    try
 	    {
@@ -77,6 +77,7 @@ public class Statements
 		update.setInt(1, x + 1);
 		update.setInt(2, x);
 		update.executeUpdate();
+		update.close();
 	    } catch (SQLException e)
 	    {
 		// TODO Auto-generated catch block
@@ -90,7 +91,7 @@ public class Statements
      */
     public void delete()
     {
-	String rdeletePostgre = "DELETE FROM number";
+	String rdeletePostgre = "DELETE FROM number;";
 	PreparedStatement delete;
 	try
 	{
