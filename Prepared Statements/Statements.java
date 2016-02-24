@@ -28,7 +28,7 @@ public class Statements
 		create = c.prepareStatement(createPostgre);//Erstellen eines prepared Statement Objektes
 		create.setInt(1, x);//Die 1, steht für das 1. ? in dem Postgre Befehl, der 2. Parameter, ist der, welcher statt dem ? eingesetzt wird
 		create.execute();//Ausführen des Statements 
-		c.close();//Gibt die Connection und JDBC Ressourcen frei
+		create.close();//Gibt die Connection und JDBC Ressourcen frei
 	    } catch (SQLException e)
 	    {
 		// TODO Auto-generated catch block
@@ -54,7 +54,7 @@ public class Statements
 		String s = rs.getString(1);
 		System.out.println(s);
 	    }
-	    c.close();
+	    read.close();
 	} catch (SQLException e)
 	{
 	    // TODO Auto-generated catch block
@@ -97,7 +97,7 @@ public class Statements
 	{
 	    delete = c.prepareStatement(rdeletePostgre);
 	    delete.execute();
-	    c.close();
+	    delete.close();
 	} catch (SQLException e)
 	{
 	    // TODO Auto-generated catch block
