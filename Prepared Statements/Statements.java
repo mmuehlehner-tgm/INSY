@@ -1,59 +1,66 @@
-
 import java.sql.*;
 
 public class Statements {
 
 	private Connection c;
-
-	public Statements(Connection con) {
+	public Statements(Connection con){
 		this.c = con;
 	}
-
-	public void create() {
+	
+	public void create(){
 		String createPostgre = "INSERT INTO number VALUES(?);";
 		PreparedStatement create;
-		for (int x = 0; x <= 10000; x++) {
+		for(int x = 0; x<=10000;x++){
 			try {
 				create = c.prepareStatement(createPostgre);
-				create.setInt(1, x);
+				create.setInt(1,x);
+				create.executeQuery();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
-	public void read() {
+	
+	public void read(){
 		String readPostgre = "SELECT * FROM number";
 		PreparedStatement read;
+		ResultSet rs = null;
 		try {
 			read = c.prepareStatement(readPostgre);
+			rs = read.executeQuery();
+			while(rs.next()){
+				String s = rs.getString(1);
+				System.out.println(s);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	public void update() {
+	
+	public void update(){
 		String updatePostgre = "UPDATE number SET nummer = ? WHERE nummer = ?";
 		PreparedStatement update;
-		for (int x = 0; x <= 10000; x++) {
+		for(int x = 0; x<=10000;x++){
 			try {
 				update = c.prepareStatement(updatePostgre);
-				update.setInt(1, x + 1);
-				update.setInt(2, x);
+				update.setInt(1,x+1);
+				update.setInt(2,x);
+				update.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
-	public void delete() {
+	
+	public void delete(){
 		String rdeletePostgre = "DELETE * FROM number";
 		PreparedStatement delete;
 		try {
 			delete = c.prepareStatement(rdeletePostgre);
+			delete.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
