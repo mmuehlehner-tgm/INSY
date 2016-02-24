@@ -6,6 +6,10 @@ public class CLI
     Options options = new Options();
     String serverName, databaseName, userName, password;
 
+    /**
+     * Konstruktor
+     * @param args
+     */
     public CLI(String[] args)
     {
 	options.addOption("N", true, "Server Name");
@@ -44,6 +48,10 @@ public class CLI
 	}
     }
 
+    /**
+     * Methode zum Zurückgeben der Attribute
+     * @return
+     */
     public String[] returnArgs()
     {
 	String[] sa = { serverName, databaseName, userName, password };
