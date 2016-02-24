@@ -37,8 +37,8 @@ public class CLI {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String args[]){
-		new CLI();
+	public String[] returnArgs(){
+		String[] sa ={serverName,databaseName,userName,password};
+		return sa;
 	}
 }

@@ -27,18 +27,21 @@ import org.postgresql.ds.PGSimpleDataSource;
  * 
  */
 public class DBConnection {
-
-	public static void main(String[] args) {
-		
-		Properties prop = new Properties();
-		InputStream input = null;
+	
+	private Properties prop;
+	private InputStream input;
+	private PGSimpleDataSource ds;
+	
+	public DBConnection(String properties){
+		prop = new Properties();
+		input = null;
 		
 		// Datenquelle erzeugen und konfigurieren
-		PGSimpleDataSource ds = new PGSimpleDataSource();
+		ds = new PGSimpleDataSource();
 		
 		try {
 
-			input = new FileInputStream("dbconnection.properties");
+			input = new FileInputStream(properties);
 
 			// Properties File laden
 			prop.load(input);
@@ -60,64 +63,14 @@ public class DBConnection {
 				}
 			}
 		}
-		
-		
-		
-		/*
-		 * Original:
-		 * 			import java.sql.*;
-					public class JDBCTest {
-					 public static void main(String[] args) {
-					// Datenquelle erzeugen und konfigurieren
-					DataSourceClass ds = new DataSourceClass();
-					ds.setServerName(SERVER);
-					ds.setUser(USER);
-					ds.setPassword(PASSWORD);
-					// Verbindung herstellen
-					Connection con = ds.getConnection();
-					// Abfrage vorbereiten und ausführen
-					Statement st = con.createStatement(ERGEBNIS_PARAMETER);
-					ResultSet rs = st.executeQuery(SELECT-QUERY);
-					// Ergebnisse verarbeiten
-					while (rs.next()) { // Cursor bewegen
-					 TYPE wert = rs.getTYPE(ATTRIBUTNAME/INDEX);
-					}
-					finally{
-					// aufräumen
-					rs.close(); 
-					st.close(); 
-					con.close();
-					}
-					}
-					}
-		 */
-		try ( 	// Alles in den runden Klammern wird automatisch geschlossen
-				// Ab Java 7
-				// Verbindung herstellen
-				Connection con = ds.getConnection();
-				// Abfrage vorbereiten und ausführen
-				/*
-				 	Statement createStatement()
-                          throws SQLException
-					Creates a Statement object for sending SQL statements to the database. 
-					SQL statements without parameters are normally executed using Statement objects. 
-					If the same SQL statement is executed many times, it may be more efficient to use 
-					a PreparedStatement object.Result sets created using the returned Statement object 
-					will by default be type TYPE_FORWARD_ONLY and have a concurrency level of CONCUR_READ_ONLY. 
-					The holdability of the created result sets can be determined by calling getHoldability().
-				 */
-				Statement st = con.createStatement();
-				ResultSet rs = st.executeQuery("select * from number");
+	}
 
-		) {
-			// Ergebnisse verarbeiten
-		while(rs.next()){
-			String tmp = rs.getString(1);
-			System.out.println(tmp);
+	public Connection connect(){	
+		try {
+			return ds.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		} catch (SQLException sql) {
-			sql.printStackTrace(System.err);
-		}
+		return null;
 	}
 }
