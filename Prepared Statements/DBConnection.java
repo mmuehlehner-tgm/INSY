@@ -107,15 +107,14 @@ public class DBConnection {
 					The holdability of the created result sets can be determined by calling getHoldability().
 				 */
 				Statement st = con.createStatement();
-				ResultSet rs = st.executeQuery("select * from produkt");
+				ResultSet rs = st.executeQuery("select * from number");
 
 		) {
 			// Ergebnisse verarbeiten
-			while (rs.next()) // Cursor bewegen
-			{
-				String wert = rs.getString(2);
-				System.out.println(wert);
-			}
+		while(rs.next()){
+			String tmp = rs.getString(1);
+			System.out.println(tmp);
+		}
 
 		} catch (SQLException sql) {
 			sql.printStackTrace(System.err);
