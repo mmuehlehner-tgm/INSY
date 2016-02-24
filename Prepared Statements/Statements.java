@@ -14,7 +14,7 @@ public class Statements {
 			try {
 				create = c.prepareStatement(createPostgre);
 				create.setInt(1,x);
-				create.executeQuery();
+				create.execute();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,7 +60,7 @@ public class Statements {
 		PreparedStatement delete;
 		try {
 			delete = c.prepareStatement(rdeletePostgre);
-			delete.executeQuery();
+			delete.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
