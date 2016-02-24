@@ -44,7 +44,7 @@ public class Main
 
 	}
 	s = new Statements(c); // Dem Statements Objekt wird die Connection übergeben
-	s.create(); // erzeugen von 10000 Datensätzen
+	s.create("number"); // erzeugen von 10000 Datensätzen
 	s.read(); // lesen der Daten
 	// Update fehlt noch
 	s.read(); // erneutes lesen nach Update

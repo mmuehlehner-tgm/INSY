@@ -17,9 +17,9 @@ public class Statements
     /**
      * Methode zum Erstellen von Datensätze in einer Tabelle, mittels prepared Statements
      */
-    public void create()
+    public void create(String table)
     {
-	String createPostgre = "INSERT INTO number VALUES(?);";//String in dem der PostgreSQL Befehl gespeichert wird. Die ? stehen für Platzhalter die man später einsetzten kann
+	String createPostgre = "INSERT INTO "+table+" VALUES(?);";//String in dem der PostgreSQL Befehl gespeichert wird. Die ? stehen für Platzhalter die man später einsetzten kann
 	PreparedStatement create;
 	for (int x = 0; x <= 10000; x++)
 	{
