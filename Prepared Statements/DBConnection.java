@@ -22,76 +22,64 @@ import org.postgresql.ds.PGSimpleDataSource;
  *         Statement ResultSet SQLException
  * 
  */
-public class DBConnection
-{
+public class DBConnection {
 
-    private Properties prop;
-    private InputStream input;
-    private PGSimpleDataSource ds;
+	private Properties prop;
+	private InputStream input;
+	private PGSimpleDataSource ds;
 
-    public DBConnection(String properties)
-    {
-	prop = new Properties();
-	input = null;
+	public DBConnection(String properties) {
+		prop = new Properties();
+		input = null;
 
-	// Datenquelle erzeugen und konfigurieren
-	ds = new PGSimpleDataSource();
+		// Datenquelle erzeugen und konfigurieren
+		ds = new PGSimpleDataSource();
 
-	try
-	{
+		try {
 
-	    input = new FileInputStream(properties);
+			input = new FileInputStream(properties);
 
-	    // Properties File laden
-	    prop.load(input);
+			// Properties File laden
+			prop.load(input);
 
-	    // Propertie value eisetzen
-	    ds.setServerName(prop.getProperty("server"));
-	    ds.setDatabaseName(prop.getProperty("database"));
-	    ds.setUser(prop.getProperty("dbuser"));
-	    ds.setPassword(prop.getProperty("dbpassword"));
+			// Propertie value eisetzen
+			ds.setServerName(prop.getProperty("server"));
+			ds.setDatabaseName(prop.getProperty("database"));
+			ds.setUser(prop.getProperty("dbuser"));
+			ds.setPassword(prop.getProperty("dbpassword"));
 
-	} catch (IOException ex)
-	{
-	    ex.printStackTrace();
-	} finally
-	{
-	    if (input != null)
-	    {
-		try
-		{
-		    input.close();
-		} catch (IOException e)
-		{
-		    e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-	    }
 	}
-    }
 
-    public DBConnection(String[] argsstring)
-    {
+	public DBConnection(String[] argsstring) {
 
-	// Datenquelle erzeugen und konfigurieren
-	ds = new PGSimpleDataSource();
+		// Datenquelle erzeugen und konfigurieren
+		ds = new PGSimpleDataSource();
 
-	// Propertie value eisetzen
-	ds.setServerName(argsstring[0]);
-	ds.setDatabaseName(argsstring[1]);
-	ds.setUser(argsstring[2]);
-	ds.setPassword(argsstring[3]);
+		// Propertie value eisetzen
+		ds.setServerName(argsstring[0]);
+		ds.setDatabaseName(argsstring[1]);
+		ds.setUser(argsstring[2]);
+		ds.setPassword(argsstring[3]);
 
-    }
-
-    public Connection connect()
-    {
-	try
-	{
-	    return ds.getConnection();
-	} catch (SQLException e)
-	{
-	    e.printStackTrace();
 	}
-	return null;
-    }
+
+	public Connection connect() {
+		try {
+			return ds.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
