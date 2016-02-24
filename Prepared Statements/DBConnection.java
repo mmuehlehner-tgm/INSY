@@ -16,7 +16,6 @@ import org.postgresql.ds.PGSimpleDataSource;
  *         Postgres Config ändern: postgresql.conf: listen_addresses = '*' pg_hba.conf: host
  *         <Datenbank> <User> <Netz> <Authentifikationsmethode>
  * 
- *         Benötigte Schritte: DriverManager oder DataSource Connection Statement ResultSet SQLException
  * 
  */
 public class DBConnection
@@ -26,12 +25,15 @@ public class DBConnection
     private InputStream input;
     private PGSimpleDataSource ds;
 
+    /**
+     * Konstruktor der die Datenquelle mit den Inhalten des Properties Files initialisiert
+     * 
+     * @param properties
+     *            (Bekommt einen Pfad bzw. Filenamen des Properties File als String)
+     */
     public DBConnection(String properties)
     {
 	prop = new Properties();
-	input = null;
-
-	// Datenquelle erzeugen und konfigurieren
 	ds = new PGSimpleDataSource();
 
 	try
@@ -42,7 +44,7 @@ public class DBConnection
 	    // Properties File laden
 	    prop.load(input);
 
-	    // Propertie value eisetzen
+	    // Property value einsetzen
 	    ds.setServerName(prop.getProperty("server"));
 	    ds.setDatabaseName(prop.getProperty("database"));
 	    ds.setUser(prop.getProperty("dbuser"));
@@ -66,13 +68,19 @@ public class DBConnection
 	}
     }
 
+    /**
+     * Konstruktor der die Datenquelle mit den Inhalten des Argument-String-Arrays initialisiert
+     * 
+     * @param argsstring
+     *            (Bekommt die Argumente in einem String-Array)
+     */
     public DBConnection(String[] argsstring)
     {
 
-	// Datenquelle erzeugen und konfigurieren
+	// Datenquelle erzeugen
 	ds = new PGSimpleDataSource();
 
-	// Propertie value eisetzen
+	// Property value einsetzen
 	ds.setServerName(argsstring[0]);
 	ds.setDatabaseName(argsstring[1]);
 	ds.setUser(argsstring[2]);
@@ -80,6 +88,11 @@ public class DBConnection
 
     }
 
+    /**
+     * Ermöglicht den Verbindungsaufbau mit einer Datenbank für ein DBConnection Objekt
+     * 
+     * @return eine Verbindung mit der Datenbank (Connection Objekt) bzw. null wenn dies Fehlschlägt
+     */
     public Connection connect()
     {
 	try
