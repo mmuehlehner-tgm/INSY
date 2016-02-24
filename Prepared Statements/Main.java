@@ -32,8 +32,8 @@ public class Main
 	s = new Statements(c);
 	s.create();
 	s.read();
-	s.update();
 	s.delete();
+
 
     }
 
