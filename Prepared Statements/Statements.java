@@ -25,14 +25,14 @@ public class Statements
 	{
 	    try
 	    {
-		create = c.prepareStatement(createPostgre);//Erstellen eines prepared Statement Objektes
-		create.setInt(1, x);//Die 1, steht für das 1. ? in dem Postgre Befehl, der 2. Parameter, ist der, welcher statt dem ? eingesetzt wird
-		create.execute();//Ausführen des Statements 
-		create.close();//Gibt die Connection und JDBC Ressourcen frei
+	    	create = c.prepareStatement(createPostgre);//Erstellen eines prepared Statement Objektes
+	    	create.setInt(1, x);//Die 1, steht für das 1. ? in dem Postgre Befehl, der 2. Parameter, ist der, welcher statt dem ? eingesetzt wird
+	    	create.execute();//Ausführen des Statements 
+	    	create.close();//Gibt das Statement Objekt frei
 	    } catch (SQLException e)
 	    {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+	    	e.printStackTrace();
 	    }
 	}
     }
@@ -73,15 +73,15 @@ public class Statements
 	{
 	    try
 	    {
-		update = c.prepareStatement(updatePostgre);
-		update.setInt(1, x + 10000);
-		update.setInt(2, x);
-		update.executeUpdate();
-		update.close();
+	    	update = c.prepareStatement(updatePostgre);
+	    	update.setInt(1, x + 10000);
+	    	update.setInt(2, x);
+	    	update.executeUpdate();
+	    	update.close();
 	    } catch (SQLException e)
 	    {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	    	// TODO Auto-generated catch block
+	    	e.printStackTrace();
 	    }
 	}
     }
