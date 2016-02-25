@@ -3,8 +3,8 @@ import org.apache.commons.cli.*;
 
 public class CLI
 {
-    Options options = new Options();
-    String serverName, databaseName, userName, password, port, table;
+    private Options options = new Options();
+    private String serverName, databaseName, userName, password, port, table;
 
     /**
      * Konstruktor
