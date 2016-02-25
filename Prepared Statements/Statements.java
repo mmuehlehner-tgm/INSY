@@ -7,6 +7,7 @@ public class Statements
 
     /**
      * Konstruktor
+     * 
      * @param con
      */
     public Statements(Connection con)
@@ -19,20 +20,22 @@ public class Statements
      */
     public void create(String table)
     {
-	String createPostgre = "INSERT INTO "+table+" VALUES(?);";//String in dem der PostgreSQL Befehl gespeichert wird. Die ? stehen für Platzhalter die man später einsetzten kann
+	String createPostgre = "INSERT INTO " + table + " VALUES(?);";// String in dem der PostgreSQL Befehl gespeichert
+								      // wird. Die ? stehen für Platzhalter die man
+								      // später einsetzten kann
 	PreparedStatement create;
 	for (int x = 1; x <= 10000; x++)
 	{
 	    try
 	    {
-	    	create = c.prepareStatement(createPostgre);//Erstellen eines prepared Statement Objektes
-	    	create.setInt(1, x);//Die 1, steht für das 1. ? in dem Postgre Befehl, der 2. Parameter, ist der, welcher statt dem ? eingesetzt wird
-	    	create.execute();//Ausführen des Statements 
-	    	create.close();//Gibt das Statement Objekt frei
+		create = c.prepareStatement(createPostgre);// Erstellen eines prepared Statement Objektes
+		create.setInt(1, x);// Die 1, steht für das 1. ? in dem Postgre Befehl, der 2. Parameter, ist der,
+				    // welcher statt dem ? eingesetzt wird
+		create.execute();// Ausführen des Statements
+		create.close();// Gibt das Statement Objekt frei
 	    } catch (SQLException e)
 	    {
-		// TODO Auto-generated catch block
-	    	e.printStackTrace();
+		System.out.println(e.getMessage());
 	    }
 	}
     }
@@ -40,9 +43,9 @@ public class Statements
     /**
      * Methode zum Auslesen von Datensätzen und Ausgeben via Konsole, mithilfe von prepared Statements
      */
-    public void read()
+    public void read(String table)
     {
-	String readPostgre = "SELECT * FROM number;";
+	String readPostgre = "SELECT * FROM " + table + ";";
 	PreparedStatement read;
 	ResultSet rs = null;
 	try
@@ -57,31 +60,29 @@ public class Statements
 	    read.close();
 	} catch (SQLException e)
 	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    System.out.println(e.getMessage());
 	}
     }
 
     /**
      * Methode zum Uptaden von Datensätzen mithilfe von prepared Statements
      */
-    public void update()
+    public void update(String table)
     {
-	String updatePostgre = "UPDATE number SET nummer = ? WHERE nummer = ?;";
+	String updatePostgre = "UPDATE " + table + " SET nummer = ? WHERE nummer = ?;";
 	PreparedStatement update;
 	for (int x = 1; x <= 10000; x++)
 	{
 	    try
 	    {
-	    	update = c.prepareStatement(updatePostgre);
-	    	update.setInt(1, x + 10000);
-	    	update.setInt(2, x);
-	    	update.executeUpdate();
-	    	update.close();
+		update = c.prepareStatement(updatePostgre);
+		update.setInt(1, x + 10000);
+		update.setInt(2, x);
+		update.executeUpdate();
+		update.close();
 	    } catch (SQLException e)
 	    {
-	    	// TODO Auto-generated catch block
-	    	e.printStackTrace();
+		System.out.println(e.getMessage());
 	    }
 	}
     }
@@ -89,9 +90,9 @@ public class Statements
     /**
      * Methode zum Löschen von Datensätzen mithilfe von prepared Statements
      */
-    public void delete()
+    public void delete(String table)
     {
-	String rdeletePostgre = "DELETE FROM number;";
+	String rdeletePostgre = "DELETE FROM " + table + ";";
 	PreparedStatement delete;
 	try
 	{
@@ -100,8 +101,7 @@ public class Statements
 	    delete.close();
 	} catch (SQLException e)
 	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    System.out.println(e.getMessage());
 	}
     }
 }

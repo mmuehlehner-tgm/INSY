@@ -8,7 +8,9 @@ public class CLI
 
     /**
      * Konstruktor
+     * 
      * @param args
+     * @throws Exception
      */
     public CLI(String[] args)
     {
@@ -43,32 +45,39 @@ public class CLI
 	    {
 		password = line.getOptionValue("P");
 	    }
-	    
-	    if (line.hasOption("p")){
-	    port = line.getOptionValue("p");
+
+	    if (line.hasOption("p"))
+	    {
+		port = line.getOptionValue("p");
 	    }
-	    
-	    if (line.hasOption(table)){
-	    table = line.getOptionValue("table");	
+
+	    if (line.hasOption("t"))
+	    {
+		table = line.getOptionValue("t");
 	    }
 	} catch (ParseException e)
 	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    System.err.println(e.getMessage());
+	    System.exit(0);
 	}
     }
 
     /**
      * Methode zum Zurückgeben der Attribute
-     * @return
+     * 
+     * @return String attributes
      */
     public String[] returnArgs()
     {
-	String[] sa = { serverName, databaseName, userName, password, port };
+	String[] sa = { serverName, databaseName, userName, password, port, table };
 	return sa;
     }
-    
-    public String returnTable(){
-    	return table;
+    /**
+     * Gibt den String table zurück
+     * @return String table
+     */
+    public String returnTable()
+    {
+	return table;
     }
 }

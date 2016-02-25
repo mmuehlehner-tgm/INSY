@@ -24,14 +24,16 @@ public class DBConnection
     private Properties prop;
     private InputStream input;
     private PGSimpleDataSource ds;
+    private String table;
 
     /**
      * Konstruktor der die Datenquelle mit den Inhalten des Properties Files initialisiert
      * 
      * @param properties
      *            (Bekommt einen Pfad bzw. Filenamen des Properties File als String)
+     * @throws Exception
      */
-    public DBConnection(String properties)
+    public DBConnection(String properties) throws Exception
     {
 	prop = new Properties();
 	ds = new PGSimpleDataSource();
@@ -49,10 +51,25 @@ public class DBConnection
 	    ds.setDatabaseName(prop.getProperty("database"));
 	    ds.setUser(prop.getProperty("dbuser"));
 	    ds.setPassword(prop.getProperty("dbpassword"));
+	    try
+	    {
+		ds.setPortNumber(Integer.parseInt(prop.getProperty("dbport")));
+	    } catch (Exception e) //Wenn sich der String nicht zu Integer parsen lässt, wird der Standard-Port verwendet
+	    {
+		ds.setPortNumber(5432); //5432 ist der Standard-Port von Postgres
+	    }
+	    if (prop.getProperty("table").matches(".*[a-zA-Z]+.*"))
+	    {
+		table = prop.getProperty("table");
+	    } else
+	    {
+		System.err.println("Keine Tabelle angegeben!");
+		throw new Exception();
+	    }
 
 	} catch (IOException ex)
 	{
-	    ex.printStackTrace();
+	    System.out.println(ex.getMessage());
 	} finally
 	{
 	    if (input != null)
@@ -62,7 +79,7 @@ public class DBConnection
 		    input.close();
 		} catch (IOException e)
 		{
-		    e.printStackTrace();
+		    System.out.println(e.getMessage());
 		}
 	    }
 	}
@@ -85,7 +102,14 @@ public class DBConnection
 	ds.setDatabaseName(argsstring[1]);
 	ds.setUser(argsstring[2]);
 	ds.setPassword(argsstring[3]);
-
+	try
+	{
+	    ds.setPortNumber(Integer.parseInt(argsstring[4]));
+	} catch (Exception e)
+	{
+	    ds.setPortNumber(5432);
+	}
+	table = argsstring[5];
     }
 
     /**
@@ -100,8 +124,17 @@ public class DBConnection
 	    return ds.getConnection();
 	} catch (SQLException e)
 	{
-	    e.printStackTrace();
+	    System.out.println(e.getMessage());
 	}
 	return null;
+    }
+
+    /**
+     * 
+     * @return Tabelle welche für Querys verwendet werden soll
+     */
+    public String getTable()
+    {
+	return this.table;
     }
 }

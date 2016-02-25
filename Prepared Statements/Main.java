@@ -17,38 +17,42 @@ public class Main
      */
     public static void main(String[] args) throws Exception
     {
-	DBConnection dbcon;
+	DBConnection dbcon = null;
 	Statements s;
-	CLI cliargs = new CLI(args);
-	String[] argsstring = cliargs.returnArgs();
-	Connection c;
-	dbcon = new DBConnection("dbconnection.properties");
-	// Wenn die Verbindung funktioniert (also nicht null zurück liefert, sondern ein Connection Objekt) wird die
-	// Conncetion gespeichert
-	if (dbcon.connect() != null)
+	Connection c = null;
+	try
 	{
+	    dbcon = new DBConnection("dbconnection.properties"); // Dem DBConnection Konstruktor wird ein String mit dem
+								 // Properties File übergeben
 	    c = dbcon.connect();
-	} else
-	{ // Wenn null, wird versucht sich durch die CLI-Arguments mit der Datenbank zu verbinden
-	    try
+	} catch (Exception e)
+	{
+	    // Wenn die Verbindung mit Properties nicht funktioniert,
+	    // wird versucht sich durch die CLI-Arguments mit der Datenbank zu verbinden
+	    System.out.println("Connection durch Properties fehlgeschlagen! Versuche CLI-Arguments...");
+	    CLI cliargs = new CLI(args); // Dem CLI Konstruktor werden die Arguments übergeben
+	    String[] argsstring = cliargs.returnArgs(); // Die Arguments werden richtig geordnet in einem String Array
+							// zurückgegeben
+	    dbcon = new DBConnection(argsstring); // Dafür wird ein neues DBConnection Objekt erzeugt, welchem die
+						  // geordneten Argumente als String-Array übergeben werden
+	    if (dbcon.connect() != null) // connect() gibt null bei fehlgeschlagener Connection zurück
 	    {
-		dbcon = new DBConnection(argsstring); // Dafür wird ein neues DBConnection Objekt erzeugt, welchem die
-						      // Argumente als String-Array übergeben werden
 		c = dbcon.connect();
-	    } catch (Exception ex)
-	    { // Wenn das auch nicht geht, wird der Benutzer durch eine Ausgabe informiert
-
+	    } else
+	    {
+		// Wenn das nicht geht, wird der Benutzer durch eine Ausgabe informiert
 		System.err.println("Kein/ungültiges Properties File und keine/ungültige Arguments vorhanden!");
 		throw new Exception("Kein/ungültiges Properties File und keine/ungültige Arguments vorhanden!");
 	    }
 
 	}
+
 	s = new Statements(c); // Dem Statements Objekt wird die Connection übergeben
-	s.create("number"); // erzeugen von 10000 Datensätzen
-	s.read(); // lesen der Daten
-	// Update fehlt noch
-	s.read(); // erneutes lesen nach Update
-	s.delete(); // löschen aller Daten
+	s.create(dbcon.getTable()); // erzeugen von 10000 Datensätzen
+	s.read(dbcon.getTable()); // lesen der Daten
+	s.update(dbcon.getTable());// Update der Daten
+	s.read(dbcon.getTable()); // erneutes lesen nach Update
+	s.delete(dbcon.getTable()); // löschen aller Daten
 
     }
 
