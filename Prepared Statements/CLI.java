@@ -20,6 +20,7 @@ public class CLI
 	options.addOption("P", true, "Password");
 	options.addOption("p", true, "Port");
 	options.addOption("t", true, "Table");
+	options.addOption("h", false, "Help");
 
 	CommandLineParser parser = new DefaultParser();
 	try
@@ -55,9 +56,17 @@ public class CLI
 	    {
 		table = line.getOptionValue("t");
 	    }
+	    if (line.hasOption("h"))
+	    {
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.printHelp("Prepared Statements", options);
+	    }
 	} catch (ParseException e)
 	{
+
 	    System.err.println(e.getMessage());
+	    HelpFormatter formatter = new HelpFormatter();
+	    formatter.printHelp("Prepared Statements", options);
 	    System.exit(0);
 	}
     }
@@ -72,8 +81,10 @@ public class CLI
 	String[] sa = { serverName, databaseName, userName, password, port, table };
 	return sa;
     }
+
     /**
      * Gibt den String table zurück
+     * 
      * @return String table
      */
     public String returnTable()

@@ -48,8 +48,10 @@ public class Main
 	}
 
 	s = new Statements(c); // Dem Statements Objekt wird die Connection übergeben
+	System.out.println("CREATE Befehl wird ausgeführt...");
 	s.create(dbcon.getTable()); // erzeugen von 10000 Datensätzen
 	s.read(dbcon.getTable()); // lesen der Daten
+	System.out.println("UPDATE Befehl wird ausgeführt...");
 	s.update(dbcon.getTable());// Update der Daten
 	s.read(dbcon.getTable()); // erneutes lesen nach Update
 	s.delete(dbcon.getTable()); // löschen aller Daten

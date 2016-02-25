@@ -1,4 +1,3 @@
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -41,7 +40,7 @@ public class DBConnection
 	try
 	{
 
-	    input = new FileInputStream(properties);
+	    input = DBConnection.class.getResourceAsStream(properties);
 
 	    // Properties File laden
 	    prop.load(input);
