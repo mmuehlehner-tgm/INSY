@@ -21,7 +21,7 @@ public class Statements
     {
 	String createPostgre = "INSERT INTO "+table+" VALUES(?);";//String in dem der PostgreSQL Befehl gespeichert wird. Die ? stehen für Platzhalter die man später einsetzten kann
 	PreparedStatement create;
-	for (int x = 0; x <= 10000; x++)
+	for (int x = 1; x <= 10000; x++)
 	{
 	    try
 	    {
@@ -74,7 +74,7 @@ public class Statements
 	    try
 	    {
 		update = c.prepareStatement(updatePostgre);
-		update.setInt(1, x + 1);
+		update.setInt(1, x + 10000);
 		update.setInt(2, x);
 		update.executeUpdate();
 		update.close();
