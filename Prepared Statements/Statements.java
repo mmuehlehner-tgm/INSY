@@ -17,6 +17,9 @@ public class Statements
 
     /**
      * Methode zum Erstellen von Datensätze in einer Tabelle, mittels prepared Statements
+     * 
+     * @param Bekommt
+     *            einen String welcher den Tabellennamen beinhaltet
      */
     public void create(String table)
     {
@@ -42,6 +45,9 @@ public class Statements
 
     /**
      * Methode zum Auslesen von Datensätzen und Ausgeben via Konsole, mithilfe von prepared Statements
+     * 
+     * @param Bekommt
+     *            einen String welcher den Tabellennamen beinhaltet
      */
     public void read(String table)
     {
@@ -66,6 +72,9 @@ public class Statements
 
     /**
      * Methode zum Uptaden von Datensätzen mithilfe von prepared Statements
+     * 
+     * @param Bekommt
+     *            einen String welcher den Tabellennamen beinhaltet
      */
     public void update(String table)
     {
@@ -89,6 +98,9 @@ public class Statements
 
     /**
      * Methode zum Löschen von Datensätzen mithilfe von prepared Statements
+     * 
+     * @param Bekommt
+     *            einen String welcher den Tabellennamen beinhaltet
      */
     public void delete(String table)
     {
